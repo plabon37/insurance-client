@@ -3,6 +3,7 @@ import React from "react";
 import InsuranceQuoteSection from "@/components/home/InsuranceQuoteSection";
 import CategorySection from "@/components/home/CategorySection";
 import InsuranceBannerSection from "@/components/home/InsuranceBannerSection";
+import Partners from "@/components/home/Partners";
 export default function HomePage() {
   return (
     <>
@@ -10,6 +11,7 @@ export default function HomePage() {
       <InsuranceQuoteSection />
       <CategorySection />
       <InsuranceBannerSection />
+      <Partners />
     </>
   );
 }
