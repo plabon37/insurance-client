@@ -4,6 +4,7 @@ import InsuranceQuoteSection from "@/components/home/InsuranceQuoteSection";
 import CategorySection from "@/components/home/CategorySection";
 import InsuranceBannerSection from "@/components/home/InsuranceBannerSection";
 import Partners from "@/components/home/Partners";
+import WorkingProcess from "@/components/home/WorkingProcess";
 export default function HomePage() {
   return (
     <>
@@ -12,6 +13,7 @@ export default function HomePage() {
       <CategorySection />
       <InsuranceBannerSection />
       <Partners />
+       <WorkingProcess />
     </>
   );
 }
