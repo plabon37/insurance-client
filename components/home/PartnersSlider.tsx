@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface LogoItem {
   image: string;
   websiteUrl: string;
@@ -31,17 +33,22 @@ export default function PartnersSlider({
           <div className="flex w-max animate-partners-scroll group-hover:[animation-play-state:paused]">
             {duplicatedLogos.map((logo, index) => (
               <a
-                key={index}
+                key={`${logo.websiteUrl}-${index}`}
                 href={logo.websiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mx-4 flex h-28 w-48 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                <img
-                  src={logo.image}
-                  alt={`Partner ${index + 1}`}
-                  className="h-auto max-h-16 w-auto max-w-full object-contain"
-                />
+                <div className="relative h-16 w-32">
+                  <Image
+                    src={logo.image}
+                    alt={`Partner ${index + 1}`}
+                    fill
+                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
               </a>
             ))}
           </div>

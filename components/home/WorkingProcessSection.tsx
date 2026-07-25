@@ -64,6 +64,7 @@ export default function WorkingProcessSection({
                     src={step.image}
                     alt={step.title}
                     fill
+                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     className="object-cover"
                   />
                 </div>

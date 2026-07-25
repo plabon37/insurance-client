@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 interface NewsItem {
@@ -25,9 +26,7 @@ interface Props {
   news: News;
 }
 
-export default function NewsSectionClient({
-  news,
-}: Props) {
+export default function NewsSectionClient({ news }: Props) {
   return (
     <section className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -46,16 +45,21 @@ export default function NewsSectionClient({
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {news.newsItems.map((item, index) => (
+          {news.newsItems.map((item) => (
             <div
-              key={index}
+              key={`${item.title}-${item.date}`}
               className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-60 w-full object-cover"
-              />
+              <div className="relative h-60 w-full">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
 
               <div className="p-6">
                 <p className="text-sm font-medium text-blue-600">

@@ -25,11 +25,16 @@ export default function InsuranceBannerSection() {
     async function loadBanner() {
       try {
         const res = await fetch(
-          "http://localhost:3000/api/insurance-banner",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/insurance-banner`,
           {
             mode: "cors",
+            cache: "no-store",
           }
         );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch insurance banner");
+        }
 
         const data = await res.json();
 

@@ -174,6 +174,7 @@ export default function FooterCTASectionClient({
                   <img
                     src={payment.image}
                     alt={payment.name}
+                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     className="h-10 rounded bg-white p-1"
                   />
                 </Link>

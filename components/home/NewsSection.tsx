@@ -22,15 +22,19 @@ interface News {
 async function getNews() {
   try {
     const res = await fetch(
-      "http://localhost:3000/api/news",
+      `${process.env.NEXT_PUBLIC_API_URL}/api/news`,
       {
         cache: "no-store",
       }
     );
 
+    if (!res.ok) {
+      throw new Error("Failed to fetch news");
+    }
+
     const data = await res.json();
 
-    if (!data.success || data.data.length === 0) {
+    if (!data.success || !data.data?.length) {
       return null;
     }
 
@@ -38,17 +42,20 @@ async function getNews() {
       (item: News) => item.isActive
     );
 
-    if (!section) return null;
+    if (!section) {
+      return null;
+    }
 
     section.newsItems = section.newsItems
-      .filter((item) => item.isActive)
+      .filter((item: NewsItem) => item.isActive)
       .sort(
-        (a, b) => a.displayOrder - b.displayOrder
+        (a: NewsItem, b: NewsItem) =>
+          a.displayOrder - b.displayOrder
       );
 
     return section;
   } catch (error) {
-    console.error(error);
+    console.error("News fetch error:", error);
     return null;
   }
 }

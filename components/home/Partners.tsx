@@ -1,28 +1,58 @@
 import PartnersSlider from "./PartnersSlider";
 
+async function getPartners() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/partners`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch partners");
+    }
+
+    const result = await res.json();
+
+    if (!result.success || !result.data?.length) {
+      return null;
+    }
+
+    const partner = result.data[0];
+
+    const logos = partner.logos
+      .filter((logo: any) => logo.isActive)
+      .sort(
+        (a: any, b: any) =>
+          a.displayOrder - b.displayOrder
+      );
+
+    if (!logos.length) {
+      return null;
+    }
+
+    return {
+      heading: partner.heading,
+      logos,
+    };
+  } catch (error) {
+    console.error("Partners fetch error:", error);
+    return null;
+  }
+}
+
 export default async function Partners() {
-  const res = await fetch("http://localhost:3000/api/partners", {
-    cache: "no-store",
-  });
+  const partnerData = await getPartners();
 
-  if (!res.ok) return null;
-
-  const result = await res.json();
-
-  if (!result.success || !result.data.length) return null;
-
-  const partner = result.data[0];
-
-  const logos = partner.logos
-    .filter((logo: any) => logo.isActive)
-    .sort((a: any, b: any) => a.displayOrder - b.displayOrder);
-
-  if (!logos.length) return null;
+  if (!partnerData) {
+    return null;
+  }
 
   return (
     <PartnersSlider
-      heading={partner.heading}
-      logos={logos}
+      heading={partnerData.heading}
+      logos={partnerData.logos}
     />
   );
 }

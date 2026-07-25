@@ -23,9 +23,13 @@ export default function CategorySection() {
   useEffect(() => {
     async function loadCategories() {
       try {
-        const res = await fetch("http://localhost:3000/api/category", {
-  mode: "cors",
-});
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/category`,
+          {
+            mode: "cors",
+            cache: "no-store",
+          }
+        );
 
         const data = await res.json();
 
@@ -83,7 +87,6 @@ export default function CategorySection() {
   return (
     <section className="bg-gray-50 py-20">
       <div className="container mx-auto px-4">
-
         <div className="mb-14 text-center">
           <h2 className="text-4xl font-bold text-gray-900">
             Insurance Categories
@@ -105,6 +108,7 @@ export default function CategorySection() {
                   src={category.image}
                   alt={category.title}
                   fill
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   className="object-cover"
                 />
               </div>
@@ -128,7 +132,6 @@ export default function CategorySection() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
